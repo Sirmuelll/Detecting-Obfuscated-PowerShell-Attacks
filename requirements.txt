@@ -1,0 +1,37 @@
+# What you need for the project?
+- A windows virtual machine (Vmware or VirtualBox)
+- Sysmon (System Monitor - to capture detailed event logs)
+- Winlogbeat (Forwards Sysmon logs to ELK(ElasticSearch + Kibana))
+- ElasticSearch + Kibana (Indexes and visualizes log data)
+
+# Command to Install Sysmon
+- Start by visiting https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon 
+- Extract the ZIP.
+- Open CMD as Administrator, then install with a basic config:
+--> sysmon.exe -accepteula -i
+
+The command above installs Sysmon with default logging. But you’ll want a better config to reduce noise and enable sysmon output relevant results.
+So, head to --> https://github.com/SwiftOnSecurity/sysmon-config
+Download the "sysmonconfig-export.xml"
+Apply it to Sysmon using this command:
+--> sysmon.exe -c sysmonconfig-export.xml
+
+The above command help Sysmon give detailed logs on:
+- Process creation
+- Network connections
+- File modifications
+- Registry changes
+- and more
+
+# Monitor Sysmon Logs
+Sysmon logs to:
+Event Viewer → Applications and Services Logs → Microsoft → Windows → Sysmon → Operational
+
+Use Event ID filters like:
+Event ID	  Description
+1	          Process creation
+3	          Network connection
+11	        File created
+13	        Registry value set
+22	        DNS query
+23	        File Delete (detected)
